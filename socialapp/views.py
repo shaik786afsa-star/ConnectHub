@@ -6,12 +6,22 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Post, Like, Comment, Follow, Profile
 from .forms import PostForm, CommentForm, ProfileForm
+from django.contrib.auth.models import User
 
 
 # Home Page
 def home(request):
+    create_default_user()  # <-- ADD THIS LINE
+
     posts = Post.objects.all().order_by('-created_at')
     return render(request, 'home.html', {'posts': posts})
+
+def create_default_user():
+    if not User.objects.filter(username="admin").exists():
+        User.objects.create_superuser(
+            username="admin",
+            password="admin123"
+        )
 
 
 # Create Post
