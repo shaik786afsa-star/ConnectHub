@@ -78,22 +78,28 @@ def add_comment(request, post_id):
 
 
 # Register
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+
 def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        confirm_password = request.POST.get("confirm_password")
 
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
+        print("POST RECEIVED")
 
-            return redirect('/')
+        if password != confirm_password:
+            return render(request, "register.html", {"error": "Passwords do not match"})
 
-    else:
-        form = UserCreationForm()
+        if User.objects.filter(username=username).exists():
+            return render(request, "register.html", {"error": "User already exists"})
 
-    return render(request, 'register.html', {'form': form})
+        User.objects.create_user(username=username, password=password)
 
+        return redirect("login")
 
+    return render(request, "register.html")
 # Login
 def user_login(request):
     if request.method == 'POST':
