@@ -2,46 +2,46 @@ Here’s a **clean, professional README.md for Task 2 submission** (your Connect
 
 ---
 
-# 📌 ConnectHub - Django Social Media Web Application
+#  ConnectHub - Django Social Media Web Application
 
-## 🧾 Project Overview
+##  Project Overview
 
 ConnectHub is a simple social media web application built using **Django (Python)**. It allows users to create accounts, share posts with images, like and comment on posts, and follow other users. The project demonstrates full-stack web development using Django’s MVC architecture.
 
 ---
 
-## 🚀 Features
+##  Features
 
-### 👤 User Authentication
+### User Authentication
 
 * User Registration
 * Login / Logout system
 * Secure password handling
 
-### 📝 Posts System
+###  Posts System
 
 * Create text posts
 * Upload images with posts
 * View all posts in feed
 
-### ❤️ Like System
+###  Like System
 
 * Like / Unlike posts
 * Real-time like count
 
-### 💬 Comments System
+###  Comments System
 
 * Add comments on posts
 * View comments under each post
 
-### 👥 Profile System
+### Profile System
 
 * User profile page
 * Profile picture and bio
 * View user posts
 * Followers & Following system
 
-### 🔗 Follow System
+### Follow System
 
 * Follow / Unfollow users
 * View followers count
@@ -49,7 +49,7 @@ ConnectHub is a simple social media web application built using **Django (Python
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 * **Backend:** Django (Python)
 * **Frontend:** HTML, CSS
@@ -59,7 +59,7 @@ ConnectHub is a simple social media web application built using **Django (Python
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 ConnectHub/
@@ -86,7 +86,7 @@ ConnectHub/
 
 ---
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
 ### 1. Clone Repository
 
@@ -129,31 +129,31 @@ python manage.py runserver
 
 ---
 
-📸 Screenshots
+Screenshots
 
 Below are some key pages of the ConnectHub application:
 
-🏠 Home Feed
+ Home Feed
 
 Displays all posts from users with like, comment, and image support.
 
 <p align="center"> <img src="screenshots/home.png" width="800"/> </p>
-📝 Create Post
+ Create Post
 
 Users can create new posts with text and image upload.
 
 <p align="center"> <img src="screenshots/create_post.png" width="800"/> </p>
-👤 User Profile
+ User Profile
 
 Shows user details, profile picture, followers, following, and posts.
 
 <p align="center"> <img src="screenshots/profile.png" width="800"/> </p>
-🔐 Login Page
+ Login Page
 
 Secure authentication system for users.
 
 <p align="center"> <img src="screenshots/login.png" width="800"/> </p>
-🆕 Register Page
+Register Page
 
 New users can create an account.
 
