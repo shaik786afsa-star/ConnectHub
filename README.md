@@ -4,7 +4,7 @@ Here’s a **clean, professional README.md for Task 2 submission** (your Connect
 
 #  ConnectHub - Django Social Media Web Application
 
-##  Project Overview
+## Project Overview
 
 ConnectHub is a simple social media web application built using **Django (Python)**. It allows users to create accounts, share posts with images, like and comment on posts, and follow other users. The project demonstrates full-stack web development using Django’s MVC architecture.
 
