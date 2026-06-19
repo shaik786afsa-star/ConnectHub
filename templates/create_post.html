@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Post</title>
+
+    <style>
+        body{
+            font-family:Arial, sans-serif;
+            background:#f0f2f5;
+            margin:0;
+        }
+
+        .navbar{
+            background:#1877f2;
+            color:white;
+            padding:15px 30px;
+        }
+
+        .container{
+            width:60%;
+            margin:40px auto;
+        }
+
+        .card{
+            background:white;
+            padding:25px;
+            border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,.1);
+        }
+
+        textarea,
+        input[type="file"]{
+            width:100%;
+            margin-top:10px;
+            margin-bottom:15px;
+        }
+
+        button{
+            background:#1877f2;
+            color:white;
+            border:none;
+            padding:10px 20px;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        a{
+            text-decoration:none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <strong>ConnectHub</strong>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>Create New Post</h2>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit">
+                Post
+            </button>
+        </form>
+
+        <br>
+
+        <a href="/">← Back to Feed</a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

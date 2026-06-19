@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ profile_user.username }} - ConnectHub</title>
+
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background:#f0f2f5;
+            margin:0;
+        }
+
+        .navbar{
+            background:#1877f2;
+            color:white;
+            padding:15px 30px;
+        }
+
+        .navbar a{
+            color:white;
+            text-decoration:none;
+            margin-left:15px;
+        }
+
+        .container{
+            width:70%;
+            margin:30px auto;
+        }
+
+        .profile-card{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            box-shadow:0 2px 8px rgba(0,0,0,.1);
+            text-align:center;
+            margin-bottom:20px;
+        }
+
+        .profile-pic{
+            width:150px;
+            height:150px;
+            border-radius:50%;
+            object-fit:cover;
+            border:3px solid #1877f2;
+        }
+
+        .stats{
+            display:flex;
+            justify-content:center;
+            gap:40px;
+            margin-top:20px;
+        }
+
+        .post-card{
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            margin-bottom:20px;
+            box-shadow:0 2px 8px rgba(0,0,0,.1);
+        }
+
+        .post-card img{
+            max-width:100%;
+            border-radius:10px;
+        }
+
+        .btn{
+            background:#1877f2;
+            color:white;
+            padding:10px 15px;
+            text-decoration:none;
+            border-radius:5px;
+            display:inline-block;
+        }
+
+        .debug{
+            color:red;
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <strong>ConnectHub</strong>
+
+    <span style="float:right;">
+        <a href="/">Feed</a>
+    </span>
+</div>
+
+<div class="container">
+
+    <div class="profile-card">
+
+        {% if profile_obj.profile_picture %}
+            <img
+                src="{{ profile_obj.profile_picture.url }}"
+                alt="Profile Picture"
+                class="profile-pic"
+            >
+        {% else %}
+            <p>No Profile Picture</p>
+        {% endif %}
+
+        <h1>{{ profile_user.username }}</h1>
+
+        <p>{{ profile_obj.bio }}</p>
+
+
+        <div class="stats">
+
+            <div>
+                <strong>{{ posts.count }}</strong>
+                <br>
+                Posts
+            </div>
+
+            <div>
+                <strong>{{ followers_count }}</strong>
+                <br>
+                Followers
+            </div>
+
+            <div>
+                <strong>{{ following_count }}</strong>
+                <br>
+                Following
+            </div>
+
+        </div>
+
+        <br>
+
+        {% if user == profile_user %}
+            <a href="/edit-profile/" class="btn">
+                Edit Profile
+            </a>
+        {% endif %}
+
+        {% if user.is_authenticated and user != profile_user %}
+            <a href="/follow/{{ profile_user.id }}/" class="btn">
+
+                {% if is_following %}
+                    Unfollow
+                {% else %}
+                    Follow
+                {% endif %}
+
+            </a>
+        {% endif %}
+
+    </div>
+
+    {% for post in posts %}
+
+        <div class="post-card">
+
+            <p>{{ post.content }}</p>
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}">
+            {% endif %}
+
+        </div>
+
+    {% empty %}
+
+        <div class="post-card">
+            No posts yet.
+        </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectHub</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: #1877f2;
+            color: white;
+            padding: 15px 30px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+        }
+
+        .container {
+            width: 70%;
+            margin: 20px auto;
+        }
+
+        .post-card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .post-card img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+        }
+
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .username {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .date {
+            color: gray;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h2>ConnectHub</h2>
+
+        {% if user.is_authenticated %}
+            Welcome, {{ user.username }} |
+            <a href="/create-post/">Create Post</a>
+            <a href="/edit-profile/">Edit Profile</a>
+            <a href="/logout/">Logout</a>
+        {% else %}
+            <a href="/login/">Login</a>
+            <a href="/register/">Register</a>
+        {% endif %}
+    </div>
+
+    <div class="container">
+
+        {% for post in posts %}
+
+            <div class="post-card">
+
+                <div class="username">
+                    <a href="/profile/{{ post.user.id }}/">
+                        {{ post.user.username }}
+                    </a>
+                </div>
+
+                <p>{{ post.content }}</p>
+
+                {% if post.image %}
+                    <img src="{{ post.image.url }}">
+                {% endif %}
+
+                <p class="date">
+                    Posted on {{ post.created_at }}
+                </p>
+
+                {% if user.is_authenticated %}
+                    <p>
+                        <a href="/like/{{ post.id }}/">
+                            ❤️ Like / Unlike
+                        </a>
+                    </p>
+                {% endif %}
+
+                <p>
+                    ❤️ Likes: {{ post.like_set.count }}
+                </p>
+                {% if user == post.user %}
+                <p>
+                <a href="/delete-post/{{ post.id }}/"
+                onclick="return confirm('Delete this post?')">
+                 🗑 Delete Post
+                </a>
+                </p>
+            {% endif %}
+
+                <h4>💬 Comments</h4>
+
+                {% for comment in post.comments.all %}
+                    <p>
+                        <strong>{{ comment.user.username }}</strong>:
+                        {{ comment.content }}
+                    </p>
+                {% empty %}
+                    <p>No comments yet.</p>
+                {% endfor %}
+
+                {% if user.is_authenticated %}
+                    <form method="POST" action="/comment/{{ post.id }}/">
+                        {% csrf_token %}
+
+                        <input
+                            type="text"
+                            name="content"
+                            placeholder="Write a comment..."
+                            required
+                        >
+
+                        <button type="submit">
+                            Comment
+                        </button>
+                    </form>
+                {% endif %}
+
+            </div>
+
+        {% empty %}
+            <p>No posts yet.</p>
+        {% endfor %}
+
+    </div>
+
+</body>
+</html>
