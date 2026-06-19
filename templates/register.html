@@ -3,6 +3,113 @@
 <head>
     <title>Register</title>
 </head>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffe6f0, #e6f7ff, #f3e5f5);
+        }
+
+        /* CARD */
+        .register-box {
+            width: 380px;
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .register-box:hover {
+            transform: translateY(-3px);
+        }
+
+        /* TITLE */
+        h2 {
+            color: #6a5af9;
+            margin-bottom: 20px;
+        }
+
+        /* INPUTS */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        input:focus {
+            border: 1px solid #6a5af9;
+        }
+
+        /* BUTTON */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #ff4d6d, #6a5af9);
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        /* LINK */
+        a {
+            color: #ff4d6d;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        p {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="register-box">
+
+    <h2>Create Account</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="text" name="username" placeholder="Username" required>
+
+        <input type="password" name="password" placeholder="Password" required>
+
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p>Already have an account?</p>
+    <a href="/login/">Login</a>
+
+</div>
+
+</body>
+</html>
 <body>
 
 <h2>Register</h2>

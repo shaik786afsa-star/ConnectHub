@@ -1,20 +1,25 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 from .models import Post, Like, Comment, Follow, Profile
 from .forms import PostForm, CommentForm, ProfileForm
-from django.contrib.auth.models import User
 
 
-# Home Page
+# -----------------------------
+# HOME PAGE
+# -----------------------------
 def home(request):
-    create_default_user()  # <-- ADD THIS LINE
+    create_default_user()
 
     posts = Post.objects.all().order_by('-created_at')
-    return render(request, 'home.html', {'posts': posts})
+
+    return render(request, 'home.html', {
+        'posts': posts
+    })
+
 
 def create_default_user():
     if not User.objects.filter(username="admin").exists():
@@ -24,10 +29,12 @@ def create_default_user():
         )
 
 
-# Create Post
+# -----------------------------
+# CREATE POST
+# -----------------------------
 @login_required
 def create_post(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
 
         if form.is_valid():
@@ -35,15 +42,21 @@ def create_post(request):
             post.user = request.user
             post.save()
 
-            return redirect('/')
+            print("IMAGE SAVED:", post.image)  # DEBUG
+
+            return redirect('home')
+
+        else:
+            print(form.errors)
 
     else:
         form = PostForm()
 
     return render(request, 'create_post.html', {'form': form})
 
-
-# Like / Unlike Post
+# -----------------------------
+# LIKE / UNLIKE
+# -----------------------------
 @login_required
 def like_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -56,16 +69,18 @@ def like_post(request, post_id):
     if not created:
         like.delete()
 
-    return redirect('/')
+    return redirect('home')
 
 
-# Add Comment
+# -----------------------------
+# ADD COMMENT
+# -----------------------------
 @login_required
 def add_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
-    if request.method == 'POST':
-        content = request.POST.get('content')
+    if request.method == "POST":
+        content = request.POST.get("content")
 
         if content:
             Comment.objects.create(
@@ -74,56 +89,66 @@ def add_comment(request, post_id):
                 content=content
             )
 
-    return redirect('/')
+    return redirect('home')
 
 
-# Register
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-
+# -----------------------------
+# REGISTER
+# -----------------------------
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
         confirm_password = request.POST.get("confirm_password")
 
-        print("POST RECEIVED")
-
         if password != confirm_password:
-            return render(request, "register.html", {"error": "Passwords do not match"})
+            return render(request, "register.html", {
+                "error": "Passwords do not match"
+            })
 
         if User.objects.filter(username=username).exists():
-            return render(request, "register.html", {"error": "User already exists"})
+            return render(request, "register.html", {
+                "error": "User already exists"
+            })
 
         User.objects.create_user(username=username, password=password)
 
         return redirect("login")
 
     return render(request, "register.html")
-# Login
+
+
+# -----------------------------
+# LOGIN
+# -----------------------------
 def user_login(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
 
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-
-            return redirect('/')
+            return redirect('home')
 
     else:
         form = AuthenticationForm()
 
-    return render(request, 'login.html', {'form': form})
+    return render(request, "login.html", {
+        "form": form
+    })
 
 
-# Logout
+# -----------------------------
+# LOGOUT
+# -----------------------------
 def user_logout(request):
     logout(request)
-    return redirect('/')
+    return redirect('home')
 
 
-# Profile Page
+# -----------------------------
+# PROFILE PAGE
+# -----------------------------
 def profile(request, user_id):
     profile_user = get_object_or_404(User, id=user_id)
 
@@ -151,24 +176,22 @@ def profile(request, user_id):
             following=profile_user
         ).exists()
 
-    return render(
-        request,
-        'profile.html',
-        {
-            'profile_user': profile_user,
-            'profile_obj': profile_obj,
-            'posts': posts,
-            'followers_count': followers_count,
-            'following_count': following_count,
-            'is_following': is_following,
-        }
-    )
+    return render(request, "profile.html", {
+        "profile_user": profile_user,
+        "profile_obj": profile_obj,
+        "posts": posts,
+        "followers_count": followers_count,
+        "following_count": following_count,
+        "is_following": is_following,
+    })
 
 
-# Follow / Unfollow User
+# -----------------------------
+# FOLLOW / UNFOLLOW
+# -----------------------------
 @login_required
 def follow_user(request, user_id):
-    user_to_follow = User.objects.get(id=user_id)
+    user_to_follow = get_object_or_404(User, id=user_id)
 
     if user_to_follow != request.user:
 
@@ -180,16 +203,19 @@ def follow_user(request, user_id):
         if not created:
             follow.delete()
 
-    return redirect(f'/profile/{user_id}/')
+    return redirect('profile', user_id=user_id)
+
+
+# -----------------------------
+# EDIT PROFILE
+# -----------------------------
 @login_required
 def edit_profile(request):
-
     profile, created = Profile.objects.get_or_create(
         user=request.user
     )
 
-    if request.method == 'POST':
-
+    if request.method == "POST":
         form = ProfileForm(
             request.POST,
             request.FILES,
@@ -198,21 +224,19 @@ def edit_profile(request):
 
         if form.is_valid():
             form.save()
-
-            return redirect(
-                f'/profile/{request.user.id}/'
-            )
+            return redirect('profile', user_id=request.user.id)
 
     else:
-        form = ProfileForm(
-            instance=profile
-        )
+        form = ProfileForm(instance=profile)
 
-    return render(
-        request,
-        'edit_profile.html',
-        {'form': form}
-    )
+    return render(request, "edit_profile.html", {
+        "form": form
+    })
+
+
+# -----------------------------
+# DELETE POST
+# -----------------------------
 @login_required
 def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
@@ -220,4 +244,4 @@ def delete_post(request, post_id):
     if post.user == request.user:
         post.delete()
 
-    return redirect('/')
+    return redirect('home')

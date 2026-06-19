@@ -1,54 +1,76 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Post</title>
+    <title>Create Post - ConnectHub</title>
 
     <style>
-        body{
-            font-family:Arial, sans-serif;
-            background:#f0f2f5;
-            margin:0;
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #ffe6f0, #e6f7ff, #f3e5f5);
         }
 
-        .navbar{
-            background:#1877f2;
-            color:white;
-            padding:15px 30px;
+        .navbar {
+            background: linear-gradient(90deg, #ff4d6d, #6a5af9);
+            color: white;
+            padding: 15px 30px;
         }
 
-        .container{
-            width:60%;
-            margin:40px auto;
+        .container {
+            width: 55%;
+            margin: 40px auto;
         }
 
-        .card{
-            background:white;
-            padding:25px;
-            border-radius:10px;
-            box-shadow:0 2px 8px rgba(0,0,0,.1);
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card h2 {
+            color: #6a5af9;
         }
 
         textarea,
-        input[type="file"]{
-            width:100%;
-            margin-top:10px;
-            margin-bottom:15px;
+        input[type="file"],
+        input[type="text"] {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-family: inherit;
         }
 
-        button{
-            background:#1877f2;
-            color:white;
-            border:none;
-            padding:10px 20px;
-            border-radius:5px;
-            cursor:pointer;
+        button {
+            background: linear-gradient(90deg, #ff4d6d, #6a5af9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        a{
-            text-decoration:none;
+        button:hover {
+            opacity: 0.9;
+        }
+
+        a {
+            text-decoration: none;
+            color: #ff4d6d;
+            font-weight: 500;
         }
     </style>
 </head>
+
 <body>
 
 <div class="navbar">
@@ -61,14 +83,13 @@
 
         <h2>Create New Post</h2>
 
+        <!-- IMPORTANT LINE (THIS IS CORRECT) -->
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
 
             {{ form.as_p }}
 
-            <button type="submit">
-                Post
-            </button>
+            <button type="submit">Post</button>
         </form>
 
         <br>

@@ -3,102 +3,154 @@
 <head>
     <title>{{ profile_user.username }} - ConnectHub</title>
 
-    <style>
-        body{
-            font-family: Arial, sans-serif;
-            background:#f0f2f5;
-            margin:0;
-        }
+<style>
 
-        .navbar{
-            background:#1877f2;
-            color:white;
-            padding:15px 30px;
-        }
+/* ================= BODY ================= */
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #ffe6f0, #e6f7ff, #f3e8ff);
+}
 
-        .navbar a{
-            color:white;
-            text-decoration:none;
-            margin-left:15px;
-        }
+/* ================= NAVBAR ================= */
+.navbar {
+    background: linear-gradient(90deg, #ff4d6d, #6a5af9);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .container{
-            width:70%;
-            margin:30px auto;
-        }
+.navbar a {
+    color: white;
+    text-decoration: none;
+}
 
-        .profile-card{
-            background:white;
-            padding:30px;
-            border-radius:10px;
-            box-shadow:0 2px 8px rgba(0,0,0,.1);
-            text-align:center;
-            margin-bottom:20px;
-        }
+/* ================= CONTAINER ================= */
+.container {
+    width: 60%;
+    margin: 30px auto;
+}
 
-        .profile-pic{
-            width:150px;
-            height:150px;
-            border-radius:50%;
-            object-fit:cover;
-            border:3px solid #1877f2;
-        }
+/* ================= PROFILE CARD ================= */
+.profile-card {
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    margin-bottom: 25px;
+    transition: 0.3s;
+}
 
-        .stats{
-            display:flex;
-            justify-content:center;
-            gap:40px;
-            margin-top:20px;
-        }
+.profile-card:hover {
+    transform: translateY(-3px);
+}
 
-        .post-card{
-            background:white;
-            padding:20px;
-            border-radius:10px;
-            margin-bottom:20px;
-            box-shadow:0 2px 8px rgba(0,0,0,.1);
-        }
+/* ================= PROFILE IMAGE ================= */
+.profile-pic {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ff4d6d;
+}
 
-        .post-card img{
-            max-width:100%;
-            border-radius:10px;
-        }
+/* ================= USERNAME ================= */
+.profile-card h1 {
+    margin: 10px 0;
+    color: #6a5af9;
+}
 
-        .btn{
-            background:#1877f2;
-            color:white;
-            padding:10px 15px;
-            text-decoration:none;
-            border-radius:5px;
-            display:inline-block;
-        }
+/* ================= BIO ================= */
+.profile-card p {
+    color: #666;
+}
 
-        .debug{
-            color:red;
-            margin-top:10px;
-        }
-    </style>
+/* ================= STATS ================= */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.stats div {
+    font-size: 16px;
+}
+
+.stats strong {
+    font-size: 22px;
+    color: #ff4d6d;
+}
+
+/* ================= POST CARD ================= */
+.post-card {
+    background: white;
+    padding: 20px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.post-card:hover {
+    transform: translateY(-3px);
+}
+
+/* ================= POST IMAGE FIX ================= */
+.post-card img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 12px;
+    display: block;
+    margin-top: 10px;
+}
+
+/* ================= BUTTON ================= */
+.btn {
+    background: linear-gradient(90deg, #ff4d6d, #6a5af9);
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+/* ================= GLOBAL IMAGE SAFETY ================= */
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+</style>
 </head>
+
 <body>
 
+<!-- NAVBAR -->
 <div class="navbar">
     <strong>ConnectHub</strong>
 
-    <span style="float:right;">
-        <a href="/">Feed</a>
-    </span>
+    <a href="/">Feed</a>
 </div>
 
 <div class="container">
 
+    <!-- PROFILE CARD -->
     <div class="profile-card">
 
         {% if profile_obj.profile_picture %}
-            <img
-                src="{{ profile_obj.profile_picture.url }}"
-                alt="Profile Picture"
-                class="profile-pic"
-            >
+            <img src="{{ profile_obj.profile_picture.url }}"
+                 alt="Profile Picture"
+                 class="profile-pic">
         {% else %}
             <p>No Profile Picture</p>
         {% endif %}
@@ -107,35 +159,22 @@
 
         <p>{{ profile_obj.bio }}</p>
 
-
         <div class="stats">
-
             <div>
-                <strong>{{ posts.count }}</strong>
-                <br>
-                Posts
+                <strong>{{ posts.count }}</strong><br>Posts
             </div>
 
             <div>
-                <strong>{{ followers_count }}</strong>
-                <br>
-                Followers
+                <strong>{{ followers_count }}</strong><br>Followers
             </div>
 
             <div>
-                <strong>{{ following_count }}</strong>
-                <br>
-                Following
+                <strong>{{ following_count }}</strong><br>Following
             </div>
-
         </div>
 
-        <br>
-
         {% if user == profile_user %}
-            <a href="/edit-profile/" class="btn">
-                Edit Profile
-            </a>
+            <a href="/edit-profile/" class="btn">Edit Profile</a>
         {% endif %}
 
         {% if user.is_authenticated and user != profile_user %}
@@ -152,8 +191,8 @@
 
     </div>
 
+    <!-- POSTS -->
     {% for post in posts %}
-
         <div class="post-card">
 
             <p>{{ post.content }}</p>
@@ -163,13 +202,10 @@
             {% endif %}
 
         </div>
-
     {% empty %}
-
         <div class="post-card">
             No posts yet.
         </div>
-
     {% endfor %}
 
 </div>

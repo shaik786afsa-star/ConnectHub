@@ -3,6 +3,76 @@
 <head>
     <title>Login</title>
 </head>
+<style>
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffe6f0, #e6f7ff, #f3e5f5);
+}
+
+/* CARD */
+.login-box {
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.login-box:hover {
+    transform: translateY(-3px);
+}
+
+/* TITLE */
+.login-box h2 {
+    color: #6a5af9;
+}
+
+/* INPUTS */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+}
+
+input:focus {
+    border: 1px solid #6a5af9;
+}
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #ff4d6d, #6a5af9);
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* LINKS */
+a {
+    color: #ff4d6d;
+    text-decoration: none;
+    font-weight: 500;
+}
+</style>
 <body>
 
 <h2>Login</h2>
